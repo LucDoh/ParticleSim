@@ -36,16 +36,19 @@ def init():
     worker.add(test, particles)
     worker.add(charge, particles)
     worker.printParticles(particles)
-    worker.resolveCollision(particles[0], particles[1], particles)
+    #worker.resolveCollision(particles[0], particles[1], particles)
+    #^broken, replaced with below: 
+    worker.resolveInECollision(particles[0], particles[1], particles)
     worker.printParticles(particles)
 
     #Move through time
     i = 0
-    for i in range(t_tot):
+    #this below was commented
+    #for i in range(t_tot):
         #pos = [(p.x, p.y) for p inelasticCollision particles]
         #Move particles through space
 
-        #for p in particles:
+    for p in particles:
 
         if i % 5 == 0:
             v_max = max([p.v_y for p in particles]) #Find max velocity
