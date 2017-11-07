@@ -3,18 +3,20 @@
 #-Luc d'Hauthuille                                                                                      
 
 import numpy as np
+import math
+from particle import Particle
+import worker as worker
+
 #import matplotlib.pyplot as plt
 #from matplotlib.patches import Circle
-from particle import Particle
-import tester as worker
 #import creater as cr
 #import FieldsAndForces as ffs
-import math
+
 
 
 #### Make all this its own function #######
 # Check if any p hits boundary, treat fully elastically
-# by flipping normal component of v. Should appreciate
+# by flipping normal component of v. Should appreciate (idk what I mean appreciate?)
 # the passsage of time.
 def checkBoundary(particles, t, size):
     for p in particles:
@@ -27,10 +29,12 @@ def checkBoundary(particles, t, size):
         if p.y + p.r > 1.0*size[1]: #or (p.y + 1.5*p.v_y*t) > 1.1*size[1]:
             p.v_y = -p.v_y
 
+
 def checkAllCollisions(particles):
     for p in particles:
         checkCollision(p, particles)
 
+#checks if there is a collision, if so then resolve using worker class
 def checkCollision(p, particles):
         for i in particles:
             if i is p:
