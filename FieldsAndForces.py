@@ -7,10 +7,24 @@ import worker as worker
 #Here we'll use a simple Euler equation [ x_t+1 = x_t + x'_t*(delt_t) ] 
 
 
+'''
+#This Was used once
 def updatePs(p, t, acc):
     p.x = p.x + p.v_x*t #+ 0.5*acc[0]*t*t
     p.y = p.y + p.v_y*t #+ 0.5*acc[1]*t*t    
     applyAcc(p, t, acc)#Questionable time to update velocities
+'''
+
+#This has been moved from pUpdateSimple2
+def updatePs(p, t, acc, eField, bField):
+    a = [f1 + f2 for f1, f2 in zip(acc, eField)]
+    p.x = p.x + p.v_x*t #0.5*(a[0])*t*t
+    p.y = p.y + p.v_y*t # 0.5*(a[1])*t*t
+    #ffs.applyAcc(p, t, a, bField)#Questionable time to update velocities
+    applyAcc(p, t, a, bField)#Questionable time to update velocities
+    #Old, worked: p.x = p.x + p.v_x*t + 0.5*(acc[0])*t*t
+
+
 
 #Updates the velocities of a particle with acc
 def applyAcc(p, t, acc, bField = [0,0,0]):
